@@ -642,9 +642,12 @@ async def get_admin_stats(
 
 @api_router.get("/admin/orders", response_model=List[Order])
 async def get_all_orders(
-    admin: User = Depends(lambda creds=Depends(security): require_admin(get_current_user_required(creds, db)))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get all orders (admin only)."""
+    current_user = await get_current_user_required(credentials, db)
+    admin = await require_admin(current_user)
+    
     orders = await db.orders.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     return orders
 
