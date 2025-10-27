@@ -11,7 +11,7 @@ const Admin = () => {
   // Mock admin data
   const stats = [
     { label: 'Commandes du mois', value: '48', change: '+12%', icon: ShoppingBag, color: 'from-cyan-500 to-blue-600' },
-    { label: 'Chiffre d\\'affaires', value: '42,580€', change: '+18%', icon: DollarSign, color: 'from-green-500 to-teal-600' },
+    { label: 'Chiffre d\'affaires', value: '42,580€', change: '+18%', icon: DollarSign, color: 'from-green-500 to-teal-600' },
     { label: 'Nouveaux clients', value: '23', change: '+8%', icon: Users, color: 'from-purple-500 to-pink-600' },
     { label: 'Devis en attente', value: '15', change: '-5%', icon: FileText, color: 'from-orange-500 to-red-600' }
   ];
