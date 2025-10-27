@@ -320,11 +320,9 @@ class BackendTester:
         quote_data = {
             "service_category": "Plomberie",
             "description": "Réparation fuite d'eau dans la salle de bain",
-            "contact_name": "Marie Martin",
-            "contact_email": "marie.martin@example.com",
-            "contact_phone": "0987654321",
-            "preferred_date": "2024-02-15",
-            "urgency": "medium"
+            "phone": "0987654321",
+            "email": "marie.martin@example.com",
+            "preferred_date": "2024-02-15"
         }
         
         result = await self.make_request("POST", "/quotes", quote_data)
