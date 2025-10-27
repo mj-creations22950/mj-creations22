@@ -532,9 +532,10 @@ async def get_unread_count(
 
 @api_router.get("/profile", response_model=User)
 async def get_profile(
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get user profile."""
+    current_user = await get_current_user_required(credentials, db)
     return current_user
 
 
