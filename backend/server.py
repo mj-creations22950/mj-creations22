@@ -422,9 +422,10 @@ async def create_quote(
 
 @api_router.get("/quotes", response_model=List[Quote])
 async def get_quotes(
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get all quotes for current user."""
+    current_user = await get_current_user_required(credentials, db)
     quotes = await db.quotes.find({"user_id": current_user.id}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     return quotes
 
