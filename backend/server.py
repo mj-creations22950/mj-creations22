@@ -542,9 +542,11 @@ async def get_profile(
 @api_router.put("/profile", response_model=User)
 async def update_profile(
     updates: dict,
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Update user profile."""
+    current_user = await get_current_user_required(credentials, db)
+    
     # Remove fields that shouldn't be updated
     updates.pop("id", None)
     updates.pop("role", None)
