@@ -65,6 +65,7 @@ const Header = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
             <ThemeSelector />
+            <NotificationCenter />
             <Button 
               variant="outline" 
               size="sm"
