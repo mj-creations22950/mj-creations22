@@ -576,9 +576,10 @@ async def get_addresses(
 @api_router.post("/addresses", response_model=Address)
 async def create_address(
     address_data: dict,
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Create a new address."""
+    current_user = await get_current_user_required(credentials, db)
     address = Address(user_id=current_user.id, **address_data)
     await db.addresses.insert_one(address.model_dump())
     return address
