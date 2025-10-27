@@ -213,8 +213,7 @@ async def get_order(
 @api_router.post("/payments/checkout/session", response_model=CheckoutSessionResponse)
 async def create_checkout_session(
     request: Request,
-    order_id: str,
-    origin_url: str,
+    checkout_data: dict,
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Create a Stripe checkout session for an order."""
