@@ -666,9 +666,12 @@ async def get_all_users(
 
 @api_router.get("/admin/quotes", response_model=List[Quote])
 async def get_all_quotes(
-    admin: User = Depends(lambda creds=Depends(security): require_admin(get_current_user_required(creds, db)))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get all quotes (admin only)."""
+    current_user = await get_current_user_required(credentials, db)
+    admin = await require_admin(current_user)
+    
     quotes = await db.quotes.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     return quotes
 
