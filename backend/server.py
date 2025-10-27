@@ -154,6 +154,8 @@ async def create_order(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Create a new order."""
+    current_user = await get_current_user_required(credentials, db)
+    
     # Calculate total
     total = sum(item.price * item.quantity for item in order_create.items)
     
