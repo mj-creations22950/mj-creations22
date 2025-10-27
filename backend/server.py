@@ -620,6 +620,9 @@ async def get_admin_stats(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get admin dashboard statistics."""
+    current_user = await get_current_user_required(credentials, db)
+    admin = await require_admin(current_user)
+    
     total_users = await db.users.count_documents({"role": "client"})
     total_orders = await db.orders.count_documents({})
     total_revenue = await db.orders.aggregate([
