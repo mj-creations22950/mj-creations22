@@ -394,7 +394,7 @@ async def stripe_webhook(request: Request, stripe_signature: Optional[str] = Hea
 @api_router.post("/quotes", response_model=Quote)
 async def create_quote(
     quote_create: QuoteCreate,
-    current_user: Optional[User] = Depends(lambda creds=Depends(security): get_current_user(creds, db))
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
 ):
     """Create a new quote request."""
     quote = Quote(
