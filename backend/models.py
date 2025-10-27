@@ -103,7 +103,6 @@ class Address(BaseModel):
     
     id: str = Field(default_factory=generate_uuid)
     user_id: str
-    label: str  # "Home", "Work", etc.
     street: str
     city: str
     postal_code: str
