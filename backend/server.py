@@ -1,5 +1,6 @@
 # server.py - Main FastAPI application with all routes
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, status, Request, Header
+from fastapi.security import HTTPAuthorizationCredentials
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
