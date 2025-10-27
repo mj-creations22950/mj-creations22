@@ -565,9 +565,10 @@ async def update_profile(
 
 @api_router.get("/addresses", response_model=List[Address])
 async def get_addresses(
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get all addresses for current user."""
+    current_user = await get_current_user_required(credentials, db)
     addresses = await db.addresses.find({"user_id": current_user.id}, {"_id": 0}).to_list(100)
     return addresses
 
