@@ -268,7 +268,7 @@ async def create_checkout_session(
 @api_router.get("/payments/checkout/status/{session_id}")
 async def get_checkout_status(
     session_id: str,
-    current_user: Optional[User] = Depends(lambda creds=Depends(security): get_current_user(creds, db))
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
 ):
     """Check the status of a checkout session."""
     # Get payment transaction
