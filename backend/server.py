@@ -516,9 +516,10 @@ async def mark_notification_read(
 
 @api_router.get("/notifications/unread/count")
 async def get_unread_count(
-    current_user: Optional[User] = Depends(lambda creds=Depends(security): get_current_user(creds, db))
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
 ):
     """Get count of unread notifications."""
+    current_user = await get_current_user(credentials, db) if credentials else None
     if not current_user:
         return {"count": 0}
     count = await db.notifications.count_documents({"user_id": current_user.id, "is_read": False})
