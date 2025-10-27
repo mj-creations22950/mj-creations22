@@ -592,9 +592,10 @@ async def create_address(
 @api_router.post("/reviews", response_model=Review)
 async def create_review(
     review_create: ReviewCreate,
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Create a new review."""
+    current_user = await get_current_user_required(credentials, db)
     review = Review(
         user_id=current_user.id,
         **review_create.model_dump()
