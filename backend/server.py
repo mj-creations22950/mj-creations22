@@ -105,8 +105,9 @@ async def login(user_login: UserLogin):
 
 
 @api_router.get("/auth/me", response_model=User)
-async def get_me(current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))):
+async def get_me(credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Get current user information."""
+    current_user = await get_current_user_required(credentials, db)
     return current_user
 
 
