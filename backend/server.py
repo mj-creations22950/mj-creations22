@@ -440,6 +440,8 @@ async def send_chat_message(
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
 ):
     """Send a message to the chat assistant."""
+    current_user = await get_current_user(credentials, db) if credentials else None
+    
     # Generate or use existing session_id
     session_id = chat_create.session_id or f"session_{datetime.utcnow().timestamp()}"
     
