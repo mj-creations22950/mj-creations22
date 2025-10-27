@@ -1,4 +1,4 @@
-// Mock data for MJ Créations
+// Extended mock data with detailed services/prestations
 
 export const services = [
   {
@@ -56,6 +56,168 @@ export const services = [
       'Optimisation de la qualité de l\'air',
       'Diagnostic de ventilation'
     ]
+  }
+];
+
+// Detailed prestations catalog
+export const prestations = [
+  // PLOMBERIE
+  {
+    id: 'plomb-1',
+    categoryId: 'plomberie',
+    name: 'Dépannage fuite d\'eau',
+    description: 'Intervention rapide pour réparation de fuite',
+    price: 85,
+    duration: '1-2h',
+    image: 'https://images.unsplash.com/photo-1635221798248-8a3452ad07cd',
+    popular: true
+  },
+  {
+    id: 'plomb-2',
+    categoryId: 'plomberie',
+    name: 'Installation robinetterie',
+    description: 'Pose de robinet, mitigeur ou mélangeur',
+    price: 120,
+    duration: '2-3h',
+    image: 'https://images.unsplash.com/photo-1635221798248-8a3452ad07cd'
+  },
+  {
+    id: 'plomb-3',
+    categoryId: 'plomberie',
+    name: 'Débouchage canalisation',
+    description: 'Débouchage WC, évier, douche',
+    price: 95,
+    duration: '1-2h',
+    image: 'https://images.unsplash.com/photo-1635221798248-8a3452ad07cd'
+  },
+  {
+    id: 'plomb-4',
+    categoryId: 'plomberie',
+    name: 'Installation WC',
+    description: 'Pose complète de toilettes',
+    price: 280,
+    duration: '3-4h',
+    image: 'https://images.unsplash.com/photo-1635221798248-8a3452ad07cd'
+  },
+  {
+    id: 'plomb-5',
+    categoryId: 'plomberie',
+    name: 'Rénovation salle de bain',
+    description: 'Rénovation complète avec plomberie',
+    price: 3500,
+    duration: '5-7 jours',
+    image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a',
+    popular: true
+  },
+  
+  // CHAUFFAGE
+  {
+    id: 'chauf-1',
+    categoryId: 'chauffage',
+    name: 'Entretien chaudière gaz',
+    description: 'Entretien annuel obligatoire',
+    price: 95,
+    duration: '1-2h',
+    image: 'https://images.pexels.com/photos/2317640/pexels-photo-2317640.jpeg',
+    popular: true
+  },
+  {
+    id: 'chauf-2',
+    categoryId: 'chauffage',
+    name: 'Dépannage chaudière',
+    description: 'Intervention urgence chauffage',
+    price: 120,
+    duration: '1-3h',
+    image: 'https://images.pexels.com/photos/2317640/pexels-photo-2317640.jpeg'
+  },
+  {
+    id: 'chauf-3',
+    categoryId: 'chauffage',
+    name: 'Installation radiateur',
+    description: 'Pose d\'un radiateur électrique ou eau',
+    price: 250,
+    duration: '2-3h',
+    image: 'https://images.pexels.com/photos/2317640/pexels-photo-2317640.jpeg'
+  },
+  {
+    id: 'chauf-4',
+    categoryId: 'chauffage',
+    name: 'Remplacement chaudière',
+    description: 'Installation chaudière condensation',
+    price: 4200,
+    duration: '2-3 jours',
+    image: 'https://images.pexels.com/photos/2317640/pexels-photo-2317640.jpeg',
+    popular: true
+  },
+  
+  // ELECTRICITE
+  {
+    id: 'elec-1',
+    categoryId: 'electricite',
+    name: 'Diagnostic électrique',
+    description: 'Bilan complet de l\'installation',
+    price: 150,
+    duration: '2-3h',
+    image: 'https://images.unsplash.com/photo-1681729058105-e30fcb24a67b'
+  },
+  {
+    id: 'elec-2',
+    categoryId: 'electricite',
+    name: 'Installation prises/interrupteurs',
+    description: 'Ajout de prises ou interrupteurs',
+    price: 85,
+    duration: '1-2h',
+    image: 'https://images.unsplash.com/photo-1681729058105-e30fcb24a67b',
+    popular: true
+  },
+  {
+    id: 'elec-3',
+    categoryId: 'electricite',
+    name: 'Remplacement tableau électrique',
+    description: 'Mise aux normes NF C 15-100',
+    price: 1200,
+    duration: '1 jour',
+    image: 'https://images.unsplash.com/photo-1681729058105-e30fcb24a67b',
+    popular: true
+  },
+  {
+    id: 'elec-4',
+    categoryId: 'electricite',
+    name: 'Installation luminaires',
+    description: 'Pose de luminaires et spots',
+    price: 120,
+    duration: '2-3h',
+    image: 'https://images.unsplash.com/photo-1681729058105-e30fcb24a67b'
+  },
+  
+  // VMC
+  {
+    id: 'vmc-1',
+    categoryId: 'vmc',
+    name: 'Entretien VMC',
+    description: 'Nettoyage et vérification',
+    price: 85,
+    duration: '1-2h',
+    image: 'https://images.pexels.com/photos/1325725/pexels-photo-1325725.jpeg'
+  },
+  {
+    id: 'vmc-2',
+    categoryId: 'vmc',
+    name: 'Installation VMC simple flux',
+    description: 'Pose complète VMC simple flux',
+    price: 850,
+    duration: '1 jour',
+    image: 'https://images.pexels.com/photos/1325725/pexels-photo-1325725.jpeg',
+    popular: true
+  },
+  {
+    id: 'vmc-3',
+    categoryId: 'vmc',
+    name: 'Installation VMC double flux',
+    description: 'Pose complète VMC double flux',
+    price: 2800,
+    duration: '2 jours',
+    image: 'https://images.pexels.com/photos/1325725/pexels-photo-1325725.jpeg'
   }
 ];
 
