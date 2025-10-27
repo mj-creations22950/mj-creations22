@@ -490,9 +490,10 @@ async def get_chat_history(session_id: str):
 
 @api_router.get("/notifications", response_model=List[Notification])
 async def get_notifications(
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get all notifications for current user."""
+    current_user = await get_current_user_required(credentials, db)
     notifications = await db.notifications.find({"user_id": current_user.id}, {"_id": 0}).sort("created_at", -1).to_list(100)
     return notifications
 
