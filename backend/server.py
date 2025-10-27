@@ -185,9 +185,10 @@ async def create_order(
 
 @api_router.get("/orders", response_model=List[Order])
 async def get_orders(
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get all orders for current user."""
+    current_user = await get_current_user_required(credentials, db)
     orders = await db.orders.find({"user_id": current_user.id}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     return orders
 
