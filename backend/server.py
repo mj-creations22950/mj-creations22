@@ -654,9 +654,12 @@ async def get_all_orders(
 
 @api_router.get("/admin/users", response_model=List[User])
 async def get_all_users(
-    admin: User = Depends(lambda creds=Depends(security): require_admin(get_current_user_required(creds, db)))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get all users (admin only)."""
+    current_user = await get_current_user_required(credentials, db)
+    admin = await require_admin(current_user)
+    
     users = await db.users.find({"role": "client"}, {"_id": 0, "hashed_password": 0}).to_list(1000)
     return users
 
