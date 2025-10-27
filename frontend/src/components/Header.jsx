@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Menu, X, Phone, User } from 'lucide-react';
+import { Menu, X, Phone, User, ShoppingCart } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { getCartCount } = useCart();
+  const cartCount = getCartCount();
 
   const navigation = [
     { name: 'Accueil', path: '/' },
     { name: 'Services', path: '/services' },
+    { name: 'Catalogue', path: '/catalog' },
     { name: 'Réalisations', path: '/portfolio' },
     { name: 'Témoignages', path: '/testimonials' },
     { name: 'Blog', path: '/blog' },
@@ -69,11 +73,20 @@ const Header = () => {
                 06.11.20.37.41
               </a>
             </Button>
-            <Button 
+            <Button
+              variant="ghost"
               size="sm"
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-lg shadow-cyan-500/30 font-bold"
-              asChild>
-              <Link to="/devis">Devis gratuit</Link>
+              className="relative"
+              asChild
+            >
+              <Link to="/cart">
+                <ShoppingCart className="h-5 w-5" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
             </Button>
             <Button
               variant="ghost"
@@ -123,11 +136,15 @@ const Header = () => {
                   06.11.20.37.41
                 </a>
               </Button>
-              <Button 
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold"
+              <Button
+                variant="outline"
+                className="w-full font-bold relative"
                 asChild
               >
-                <Link to="/devis">Devis gratuit</Link>
+                <Link to="/cart">
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  Panier {cartCount > 0 && `(${cartCount})`}
+                </Link>
               </Button>
               <Button
                 variant="outline"
