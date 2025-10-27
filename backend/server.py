@@ -215,7 +215,7 @@ async def create_checkout_session(
     request: Request,
     order_id: str,
     origin_url: str,
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Create a Stripe checkout session for an order."""
     # Get order
