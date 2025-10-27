@@ -271,6 +271,8 @@ async def get_checkout_status(
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
 ):
     """Check the status of a checkout session."""
+    current_user = await get_current_user(credentials, db) if credentials else None
+    
     # Get payment transaction
     transaction = await db.payment_transactions.find_one({"session_id": session_id}, {"_id": 0})
     if not transaction:
