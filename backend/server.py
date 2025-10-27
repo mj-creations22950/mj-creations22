@@ -501,9 +501,10 @@ async def get_notifications(
 @api_router.put("/notifications/{notification_id}/read")
 async def mark_notification_read(
     notification_id: str,
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Mark a notification as read."""
+    current_user = await get_current_user_required(credentials, db)
     result = await db.notifications.update_one(
         {"id": notification_id, "user_id": current_user.id},
         {"$set": {"is_read": True}}
