@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { Menu, X, Phone, User, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import ThemeSelector from './ThemeSelector';
+import NotificationCenter from './NotificationCenter';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
