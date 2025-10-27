@@ -219,6 +219,12 @@ async def create_checkout_session(
     """Create a Stripe checkout session for an order."""
     current_user = await get_current_user_required(credentials, db)
     
+    order_id = checkout_data.get("order_id")
+    origin_url = checkout_data.get("origin_url")
+    
+    if not order_id or not origin_url:
+        raise HTTPException(status_code=400, detail="order_id and origin_url are required")
+    
     # Get order
     order = await db.orders.find_one({"id": order_id, "user_id": current_user.id}, {"_id": 0})
     if not order:
