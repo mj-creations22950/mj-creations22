@@ -44,6 +44,7 @@ function App() {
             </Routes>
           </main>
           <Footer />
+          <ChatAssistant />
           <Toaster />
         </div>
       </BrowserRouter>
