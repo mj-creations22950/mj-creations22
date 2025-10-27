@@ -151,7 +151,7 @@ async def get_services_by_category(category: str):
 @api_router.post("/orders", response_model=Order)
 async def create_order(
     order_create: OrderCreate,
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Create a new order."""
     # Calculate total
