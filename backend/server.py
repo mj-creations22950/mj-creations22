@@ -196,9 +196,10 @@ async def get_orders(
 @api_router.get("/orders/{order_id}", response_model=Order)
 async def get_order(
     order_id: str,
-    current_user: User = Depends(lambda creds=Depends(security): get_current_user_required(creds, db))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get a specific order."""
+    current_user = await get_current_user_required(credentials, db)
     order = await db.orders.find_one({"id": order_id, "user_id": current_user.id}, {"_id": 0})
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
