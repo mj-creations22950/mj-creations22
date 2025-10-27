@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
-import { prestations, services } from '../data/mock';
+import { allServices603 } from '../data/allServices603';
+import { services } from '../data/mock';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../hooks/use-toast';
-import { ShoppingCart, Clock, TrendingUp, Filter } from 'lucide-react';
+import { ShoppingCart, Clock, TrendingUp, Filter, Check, X } from 'lucide-react';
 
 const Catalog = () => {
   const [filter, setFilter] = useState('all');
