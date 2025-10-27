@@ -397,6 +397,8 @@ async def create_quote(
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
 ):
     """Create a new quote request."""
+    current_user = await get_current_user(credentials, db) if credentials else None
+    
     quote = Quote(
         user_id=current_user.id if current_user else None,
         **quote_create.model_dump()
