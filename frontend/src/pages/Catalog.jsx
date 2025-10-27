@@ -13,19 +13,22 @@ const Catalog = () => {
   const { addToCart } = useCart();
   const { toast } = useToast();
 
+  // Combiner tous les services
+  const allPrestations = Object.values(allServices603).flat();
+
   const categories = [
-    { id: 'all', label: 'Toutes les prestations', count: prestations.length },
+    { id: 'all', label: 'Tous les services', count: allPrestations.length },
     ...services.map(s => ({
       id: s.id,
       label: s.title,
       color: s.color,
-      count: prestations.filter(p => p.categoryId === s.id).length
+      count: allServices603[s.id]?.length || 0
     }))
   ];
 
   const filteredPrestations = filter === 'all'
-    ? prestations
-    : prestations.filter(p => p.categoryId === filter);
+    ? allPrestations
+    : allServices603[filter] || [];
 
   const handleAddToCart = (prestation) => {
     addToCart(prestation);
