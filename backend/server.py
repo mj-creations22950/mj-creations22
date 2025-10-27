@@ -680,9 +680,12 @@ async def get_all_quotes(
 async def update_order_status(
     order_id: str,
     status_update: dict,
-    admin: User = Depends(lambda creds=Depends(security): require_admin(get_current_user_required(creds, db)))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Update order status (admin only)."""
+    current_user = await get_current_user_required(credentials, db)
+    admin = await require_admin(current_user)
+    
     result = await db.orders.update_one(
         {"id": order_id},
         {"$set": {"status": status_update["status"], "updated_at": datetime.utcnow().isoformat()}}
