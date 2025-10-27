@@ -218,6 +218,8 @@ async def create_checkout_session(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Create a Stripe checkout session for an order."""
+    current_user = await get_current_user_required(credentials, db)
+    
     # Get order
     order = await db.orders.find_one({"id": order_id, "user_id": current_user.id}, {"_id": 0})
     if not order:
