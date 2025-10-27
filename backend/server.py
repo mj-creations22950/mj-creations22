@@ -617,7 +617,7 @@ async def get_service_reviews(service_id: str):
 
 @api_router.get("/admin/stats")
 async def get_admin_stats(
-    admin: User = Depends(lambda creds=Depends(security): require_admin(get_current_user_required(creds, db)))
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get admin dashboard statistics."""
     total_users = await db.users.count_documents({"role": "client"})
