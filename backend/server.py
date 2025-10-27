@@ -437,7 +437,7 @@ async def get_quotes(
 @api_router.post("/chat", response_model=ChatMessage)
 async def send_chat_message(
     chat_create: ChatMessageCreate,
-    current_user: Optional[User] = Depends(lambda creds=Depends(security): get_current_user(creds, db))
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
 ):
     """Send a message to the chat assistant."""
     # Generate or use existing session_id
