@@ -47,8 +47,8 @@ function App() {
             </main>
             <Footer />
             <ChatAssistant />
-            <Toaster />
           </div>
+          <Toaster />
         </BrowserRouter>
       </CartProvider>
     </AuthProvider>
