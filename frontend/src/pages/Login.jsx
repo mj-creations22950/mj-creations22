@@ -1,38 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { LogIn, UserPlus } from 'lucide-react';
+import { LogIn, UserPlus, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../hooks/use-toast';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { login, register, user, loading: authLoading } = useAuth();
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [registerData, setRegisterData] = useState({
-    name: '',
+    full_name: '',
     email: '',
     phone: '',
     password: '',
     confirmPassword: ''
   });
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  useEffect(() => {
+    // Redirect if already logged in
+    if (user) {
+      navigate(user.role === 'admin' ? '/admin' : '/profile');
+    }
+  }, [user, navigate]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Mock login
-    localStorage.setItem('user', JSON.stringify({ email: loginData.email, name: 'Client' }));
-    toast({
-      title: "Connexion réussie !",
-      description: "Bienvenue sur votre espace client.",
-    });
-    navigate('/profile');
+    setLoading(true);
+    
+    const result = await login(loginData.email, loginData.password);
+    
+    if (result.success) {
+      toast({
+        title: "Connexion réussie !",
+        description: `Bienvenue ${result.user.full_name}`,
+      });
+      navigate(result.user.role === 'admin' ? '/admin' : '/profile');
+    } else {
+      toast({
+        title: "Erreur de connexion",
+        description: result.error || "Email ou mot de passe incorrect",
+        variant: "destructive"
+      });
+    }
+    
+    setLoading(false);
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+    
     if (registerData.password !== registerData.confirmPassword) {
       toast({
         title: "Erreur",
@@ -41,17 +64,36 @@ const Login = () => {
       });
       return;
     }
-    // Mock registration
-    localStorage.setItem('user', JSON.stringify({ 
-      email: registerData.email, 
-      name: registerData.name,
-      phone: registerData.phone
-    }));
-    toast({
-      title: "Compte créé !",
-      description: "Votre compte a été créé avec succès.",
-    });
-    navigate('/profile');
+    
+    if (registerData.password.length < 6) {
+      toast({
+        title: "Erreur",
+        description: "Le mot de passe doit contenir au moins 6 caractères.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setLoading(true);
+    
+    const { confirmPassword, ...userData } = registerData;
+    const result = await register(userData);
+    
+    if (result.success) {
+      toast({
+        title: "Compte créé !",
+        description: "Votre compte a été créé avec succès.",
+      });
+      navigate('/profile');
+    } else {
+      toast({
+        title: "Erreur d'inscription",
+        description: result.error || "Une erreur est survenue",
+        variant: "destructive"
+      });
+    }
+    
+    setLoading(false);
   };
 
   return (
