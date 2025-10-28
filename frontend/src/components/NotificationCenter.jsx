@@ -151,7 +151,7 @@ const NotificationCenter = () => {
                       className={`p-4 hover:bg-gray-50 transition-colors ${
                         !notif.is_read ? 'bg-cyan-50/50' : ''
                       }`}
-                      onClick={() => markAsRead(notif.id)}
+                      onClick={() => !notif.is_read && markAsRead(notif.id)}
                     >
                       <div className="flex items-start gap-3">
                         <div className={`p-2 rounded-lg ${getTypeColor(notif.type)}`}>
