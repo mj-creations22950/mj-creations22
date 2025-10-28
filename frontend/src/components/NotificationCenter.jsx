@@ -132,7 +132,11 @@ const NotificationCenter = () => {
           </div>
 
           <CardContent className="p-0 max-h-[400px] overflow-y-auto">
-            {notifications.length === 0 ? (
+            {loading ? (
+              <div className="p-8 text-center text-gray-500">
+                <p>Chargement...</p>
+              </div>
+            ) : notifications.length === 0 ? (
               <div className="p-8 text-center text-gray-500">
                 <Bell className="h-12 w-12 mx-auto mb-3 opacity-50" />
                 <p>Aucune notification</p>
