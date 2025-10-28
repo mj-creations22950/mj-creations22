@@ -2,52 +2,78 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Bell, X, CheckCircle, AlertCircle, Info, ShoppingBag, Calendar } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { notificationsAPI } from '../utils/api';
 
 const NotificationCenter = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      type: 'order',
-      title: 'Commande confirmee',
-      message: 'Votre commande CMD-2024-001 a ete confirmee',
-      date: new Date('2024-10-20'),
-      read: false,
-      icon: ShoppingBag
-    },
-    {
-      id: 2,
-      type: 'appointment',
-      title: 'Rappel rendez-vous',
-      message: 'Votre rendez-vous du 05/11 a 14h00',
-      date: new Date('2024-10-27'),
-      read: false,
-      icon: Calendar
-    },
-    {
-      id: 3,
-      type: 'success',
-      title: 'Points fidelite',
-      message: 'Vous avez gagne 217 points !',
-      date: new Date('2024-10-20'),
-      read: false,
-      icon: CheckCircle
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated && isOpen) {
+      fetchNotifications();
     }
-  ]);
+  }, [isAuthenticated, isOpen]);
 
-  const unreadCount = notifications.filter(n => !n.read).length;
-
-  const markAsRead = (id) => {
-    setNotifications(prev =>
-      prev.map(n => (n.id === id ? { ...n, read: true } : n))
-    );
+  const fetchNotifications = async () => {
+    setLoading(true);
+    try {
+      const response = await notificationsAPI.getAll();
+      const formattedNotifications = response.data.map(notif => ({
+        ...notif,
+        icon: getIconForType(notif.type),
+        date: new Date(notif.created_at)
+      }));
+      setNotifications(formattedNotifications);
+    } catch (error) {
+      console.error('Failed to fetch notifications:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const markAllAsRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  const getIconForType = (type) => {
+    switch (type) {
+      case 'success':
+        return CheckCircle;
+      case 'warning':
+      case 'error':
+        return AlertCircle;
+      default:
+        return Info;
+    }
+  };
+
+  const unreadCount = notifications.filter(n => !n.is_read).length;
+
+  const markAsRead = async (id) => {
+    try {
+      await notificationsAPI.markAsRead(id);
+      setNotifications(prev =>
+        prev.map(n => (n.id === id ? { ...n, is_read: true } : n))
+      );
+    } catch (error) {
+      console.error('Failed to mark notification as read:', error);
+    }
+  };
+
+  const markAllAsRead = async () => {
+    try {
+      const promises = notifications
+        .filter(n => !n.is_read)
+        .map(n => notificationsAPI.markAsRead(n.id));
+      await Promise.all(promises);
+      setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
+    } catch (error) {
+      console.error('Failed to mark all as read:', error);
+    }
   };
 
   const deleteNotification = (id) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
     setNotifications(prev => prev.filter(n => n.id !== id));
   };
 
