@@ -109,7 +109,7 @@ const ChatAssistant = () => {
   };
 
   return (
-    <>
+    <div className="chat-assistant-container">
       {/* Floating Chat Button */}
       {!isOpen && (
         <button
