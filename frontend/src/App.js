@@ -52,8 +52,8 @@ function App() {
         </BrowserRouter>
       </CartProvider>
     </AuthProvider>
-    </CartProvider>
   );
+};
 }
 
 export default App;
