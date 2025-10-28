@@ -181,7 +181,7 @@ const ChatAssistant = () => {
           </div>
         </Card>
       )}
-    </>
+    </div>
   );
 };
 
