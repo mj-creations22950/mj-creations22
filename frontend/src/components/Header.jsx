@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Menu, X, Phone, User, ShoppingCart } from 'lucide-react';
+import { Menu, X, Phone, User, ShoppingCart, LogOut } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import ThemeSelector from './ThemeSelector';
 import NotificationCenter from './NotificationCenter';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { getCartCount } = useCart();
+  const { user, logout, isAuthenticated } = useAuth();
   const cartCount = getCartCount();
 
   const navigation = [
