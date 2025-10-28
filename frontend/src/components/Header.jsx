@@ -68,7 +68,7 @@ const Header = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
             <ThemeSelector />
-            <NotificationCenter />
+            {isAuthenticated && <NotificationCenter />}
             <Button 
               variant="outline" 
               size="sm"
@@ -95,15 +95,38 @@ const Header = () => {
                 )}
               </Link>
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              asChild
-            >
-              <Link to="/login">
-                <User className="h-5 w-5" />
-              </Link>
-            </Button>
+            
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => navigate(user?.role === 'admin' ? '/admin' : '/profile')}
+                >
+                  <User className="h-5 w-5 mr-2" />
+                  <span className="hidden xl:inline">{user?.full_name}</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={logout}
+                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                >
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+              >
+                <Link to="/login">
+                  <User className="h-5 w-5 mr-2" />
+                  <span className="hidden xl:inline">Connexion</span>
+                </Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
