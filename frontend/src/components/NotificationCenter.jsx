@@ -149,7 +149,7 @@ const NotificationCenter = () => {
                     <div
                       key={notif.id}
                       className={`p-4 hover:bg-gray-50 transition-colors ${
-                        !notif.read ? 'bg-cyan-50/50' : ''
+                        !notif.is_read ? 'bg-cyan-50/50' : ''
                       }`}
                       onClick={() => markAsRead(notif.id)}
                     >
