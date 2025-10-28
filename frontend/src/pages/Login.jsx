@@ -181,8 +181,8 @@ const Login = () => {
                       <Label htmlFor="register-name">Nom complet</Label>
                       <Input
                         id="register-name"
-                        value={registerData.name}
-                        onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
+                        value={registerData.full_name}
+                        onChange={(e) => setRegisterData({ ...registerData, full_name: e.target.value })}
                         required
                         placeholder="Jean Dupont"
                       />
@@ -218,6 +218,7 @@ const Login = () => {
                         onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
                         required
                         placeholder="••••••••"
+                        minLength={6}
                       />
                     </div>
                     <div className="space-y-2">
@@ -229,11 +230,26 @@ const Login = () => {
                         onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
                         required
                         placeholder="••••••••"
+                        minLength={6}
                       />
                     </div>
-                    <Button type="submit" size="lg" className="w-full bg-cyan-600 hover:bg-cyan-700 text-white">
-                      <UserPlus className="mr-2 h-5 w-5" />
-                      Créer mon compte
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      className="w-full bg-cyan-600 hover:bg-cyan-700 text-white"
+                      disabled={loading || authLoading}
+                    >
+                      {loading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Création...
+                        </>
+                      ) : (
+                        <>
+                          <UserPlus className="mr-2 h-5 w-5" />
+                          Créer mon compte
+                        </>
+                      )}
                     </Button>
                   </form>
                 </TabsContent>
