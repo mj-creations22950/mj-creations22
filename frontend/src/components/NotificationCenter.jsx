@@ -74,8 +74,6 @@ const NotificationCenter = () => {
   const deleteNotification = (id) => {
     setNotifications(prev => prev.filter(n => n.id !== id));
   };
-    setNotifications(prev => prev.filter(n => n.id !== id));
-  };
 
   const getTypeColor = (type) => {
     switch (type) {
