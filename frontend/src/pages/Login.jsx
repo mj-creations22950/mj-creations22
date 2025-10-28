@@ -153,9 +153,23 @@ const Login = () => {
                         Mot de passe oublié ?
                       </a>
                     </div>
-                    <Button type="submit" size="lg" className="w-full bg-cyan-600 hover:bg-cyan-700 text-white">
-                      <LogIn className="mr-2 h-5 w-5" />
-                      Se connecter
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-cyan-600 hover:bg-cyan-700 text-white" 
+                      size="lg"
+                      disabled={loading || authLoading}
+                    >
+                      {loading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Connexion...
+                        </>
+                      ) : (
+                        <>
+                          <LogIn className="mr-2 h-5 w-5" />
+                          Se connecter
+                        </>
+                      )}
                     </Button>
                   </form>
                 </TabsContent>
